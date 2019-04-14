@@ -1,0 +1,60 @@
+---
+title: "PCA"
+author: "Yuta Hayashi"
+date: "4/13/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,warning=FALSE,message=FALSE}
+library(readr)
+USArrests <- read_csv("USArrests.csv")
+View(USArrests)
+```
+
+```{r}
+states=row.names(USArrests)
+states
+```
+```{r}
+names(USArrests)
+data("USArrests")
+```
+
+Perform principal components analysis. Set scale=TRUE since it sets the standard deviation to 1.
+
+```{r}
+pr.out=prcomp(USArrests, scale=TRUE)
+```
+
+```{r}
+pr.out$rotation
+```
+
+Attain biplot. Since the figure is a mirror image we multiply both rotation matrix and x matrix by -1 
+
+```{r, fig.height=5, fig.width=5}
+pr.out$rotation = -pr.out$rotation
+pr.out$x = -pr.out$x
+biplot(pr.out, scale=0)
+```
+
+compute the proportion of variance explained by each principal component, we simply divide the variance explained by each principal of component by the total variance explained by all four principal component. 
+```{r}
+pr.var=pr.out$sdev^2
+pr.var
+pve=pr.var/sum(pr.var)
+pve
+```
+
+```{r}
+plot(pve, xlab=" Principal Component " , ylab=" Proportion of biplot() Variance Explained " , ylim=c(0,1) ,type='b')
+```
+
+```{r}
+plot(cumsum(pve), xlab=" Principal Component " , ylab ="Cumulative Proportion of Variance Explained " , ylim=c(0,1) , type='b')
+```
+
