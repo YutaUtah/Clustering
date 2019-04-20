@@ -1,0 +1,16 @@
+---
+title: "breast cancer"
+author: "Yuta Hayashi"
+date: "4/19/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,message=FALSE,warning=FALSE}
+library(readr)
+data <- read_csv("data.csv")
+```
+
