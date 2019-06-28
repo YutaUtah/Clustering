@@ -1,2 +1,3 @@
-# R-project
-Rstudio Project
+# R projects
+- Statistical Modeling
+- Machine Learning
