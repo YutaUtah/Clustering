@@ -5,4 +5,9 @@
 
 - Machine Learning
   - Unsupervised Machine Learning
-    - [FIFA 2019 Players Clustering Analysis](https://github.com/YutaUtah/R-project/blob/master/school%20project/fifa2.Rmd) (2019)
+    - [**Senior Experience:** FIFA 2019 Players Clustering Analysis](https://github.com/YutaUtah/R-project/blob/master/school%20project/fifa2.Rmd) (2019)
+    - [Project on Wine Quality Clustering](https://github.com/YutaUtah/R-project/blob/master/school%20project/wine%20quality.Rmd) (2019)
+    - [Project on the Possibility of Breast Cancer data collected in Wisconsin](https://github.com/YutaUtah/R-project/blob/master/school%20project/breastcancer.Rmd)
+
+  - Supervised Machine Learning
+    - [Project on Titianic Data (**Randome Forest**, **Logistic Regression**, **SVM**)](https://github.com/YutaUtah/R-project/blob/master/titanic/titanic.Rmd)
