@@ -10,4 +10,4 @@
     - [Project on the Possibility of Breast Cancer data collected in Wisconsin](https://github.com/YutaUtah/R-project/blob/master/school%20project/breastcancer.Rmd)
 
   - Supervised Machine Learning
-    - [Project on Titianic Data (**Randome Forest**, **Logistic Regression**, **SVM**)](https://github.com/YutaUtah/R-project/blob/master/titanic/titanic.Rmd)
+    - [Project on Titianic Data (**Random Forest**, **Logistic Regression**, **SVM**)](https://github.com/YutaUtah/R-project/blob/master/titanic/titanic.Rmd)
