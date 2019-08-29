@@ -5,21 +5,19 @@ date: "4/19/2019"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-```{r,message=FALSE,warning=FALSE}
+
+
 library(readr)
 wdbc <- read_csv("data.csv")
-```
 
-```{r}
+
+
 library(dplyr)
 library(corrplot)
-```
 
-```{r}
+
+
 wdbc.data <- as.matrix(wdbc[,c(3:32)])
 wdbc.data
 row.names(wdbc.data) <- wdbc$id
@@ -33,9 +31,9 @@ roundSD <- function(x){
 }
 
 apply(wdbc.data, 2, roundSD)
-```
 
-```{r}
+
+
 corMatrix <- wdbc[,c(3:32)]
 cNames <- c("rad_m","txt_m","per_m",
                  "are_m","smt_m","cmp_m","con_m",
@@ -49,7 +47,7 @@ colnames(corMatrix) <- cNames
 #get the correlation plot 
 M <- round(cor(corMatrix), 2)
 corrplot(M, diag = FALSE, method="shade", order="FPC", tl.srt = 90)
-```
+
 
 ####PCA analysis
 
@@ -57,21 +55,21 @@ Using PCA we can combine our many variables into different linear combinations t
 
 The first step in doing a PCA, is to ask ourselves whether or not the data should be scaled to unit variance. That is, to bring all the numeric variables to the same scale. In other words, we are trying to determine whether we should use a correlation matrix or a covariance matrix in our calculations of eigen values and eigen vectors (aka principal components).
 
-```{r}
+
 wdbc.pcov <- princomp(wdbc.data, scores = TRUE)
 summary(wdbc.pcov)
-```
+
 
 #create biplot
 
-```{r,warning=FALSE}
+
 cex.before <- par("cex")
 par(cex = 0.6)
 biplot(wdbc.pcov)
 par(cex = cex.before)
-```
 
-```{r}
+
+
 # Set up 1 x 2 plotting grid
 par(mfrow = c(1, 2))
 pr.cvar <- wdbc.pcov$sdev ^ 2
@@ -86,14 +84,14 @@ round(cumsum(pve_cov), 2)
 plot(pve_cov, xlab = "Principal Component", 
      ylab = "Proportion of Variance Explained", 
      ylim = c(0, 1), type = "b")
-```
 
-```{r}
+
+
 # Plot cumulative proportion of variance explained
 plot(cumsum(pve_cov), xlab = "Principal Component", 
      ylab = "Cumulative Proportion of Variance Explained", 
      ylim = c(0, 1), type = "b")
-```
+
 
 ####The Scree-plots suggest that using a covariance matrix is not the correct approach for calculating the principal components. We will now use the correlation matrix.
 
@@ -103,12 +101,12 @@ plot(cumsum(pve_cov), xlab = "Principal Component",
 
 When the correlation matrix is used to calculate the eigen values and eigen vectors, we use the prcomp() function.
 
-```{r}
+
 wdbc.pr <- prcomp(wdbc.data, scale = TRUE, center = TRUE)
 summary(wdbc.pr)
-```
 
-```{r}
+
+
 # Set up 1 x 2 plotting grid
 par(mfrow = c(1, 2))
 
@@ -135,14 +133,14 @@ plot(pve, xlab = "Principal Component",
 plot(cumsum(pve), xlab = "Principal Component", 
      ylab = "Cumulative Proportion of Variance Explained", 
      ylim = c(0, 1), type = "b")
-```
 
-```{r}
+
+
 # Scatter plot observations by components 1 and 2
 plot(wdbc.pr$x[, c(1, 2)], col = (diagnosis + 1), 
      xlab = "PC1", ylab = "PC2")
 legend(x="topleft", pch=1, col = c("red", "black"), legend = c("B", "M"))
-```
+
 
 There is a clear seperation of diagnosis (M or B) that is evident in the PC1 vs PC2 plot.
 
