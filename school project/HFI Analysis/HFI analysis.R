@@ -5,11 +5,9 @@ date: "4/12/2019"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-```{r,message=FALSE, warning=FALSE, echo=FALSE}
+
+
 library(GGally)
 library(ggformula)
 library(readxl)
@@ -17,27 +15,23 @@ library(dplyr)
 library(knitr)
 library(gridExtra)
 library(ggplot2)
-```
 
-```{r, warning=FALSE, message=FALSE,echo=FALSE}
+
+
 fi2018 <- read.csv("human_freedom.csv")
-```
 
 
-\newpage
+
 
 ####Abstract     
 
 The goal of this project is to predict the factors that influence human freedom index nationally in different years. The data includes multiple variables that not only describes degree of human rights but also economic freedom. Most of our variables are quantitative, but we also have categorical data for yes or no response to homosexual relationship, year, and countries. We create three models from the data that each has its own meaning to describe expected human freedom index. We compare those models base on F statistic, $R^2$, and statistical significance of each variable within a model. All of three data produced statistically significant prediction results with important and interesting interpretation. Specifically this project focuses on the most predictive variables such as trade and same_sex variables with intriguing interpretations.
-\
-\
+
 
 
 #### 1) Background and significance
 
 The Human Freedom Index casts a wide net in an attempt to capture as broad a set of freedoms as could be clearly identified and measured. But what is the definition of human freedom? The validity of human freedom scale has been contested among scholars. It is often the case that sociologists and anthropologists interpret freedom as subjective matter and not comparable across individuals. They rather use it as more subjective term like satisfaction to describe the idea of human freedom in the local contexts.[1] Therefore, based on their perspective, there is substantial variability in terms of regions and time. However, economists believe that better economic condition results in more freedom universally and it is not influenced by regions and time.[2] Considering universal factors that contribute to freedom such as the size of government, individual affluence, or freedom to trade is useful since they will give us a way to bring applicability and connectedness for the definition of human freedom in local contexts as well[3]. Furthermore, it is important to analyze what other factors potentially interact with the factors related economic measurement and how they amplify each other to predict the expected human freedom index. This research is very important since analyzing what makes people's freedom leads us to enhance our further happiness level with our quality of life. This project is based on a dataset that is comprised of the results of a survey conducted by the Fraser Institute. On a scale of 0 to 10(this value includes decimal numbers), where 10 represents best indication and 0 represent worst indication, they collected data with human freedom index variables and other variables for 162 countries in 2018. The purpose of this project is to address following questions: 1) we demonstrate what factors influence the expected human freedom by creating multiple regression model 2) we demonstrate whether or not the variables related to economic aspects as interaction terms contribute to forming a better multiple regression model. 3) we interpret each coefficient of a final multiple regression model.
-\
-\
 
 
 #### 2) Methods
@@ -45,7 +39,7 @@ The Human Freedom Index casts a wide net in an attempt to capture as broad a set
 ######a. Data Collection / Cleaning
 
 Original data comes from one of kaggle's database(https://www.kaggle.com/gsutters/the-human-freedom-index). It contains 1458 rows(different countries in different year) and 123 columns(4 response variable: human freedom index and rank, and economic freedom index and rank). In order to attain clean data, we go through the data cleaning process. First of all, we filter all existing variables to 13 variables. We do it, first of all, by finding variables we are interested in, next step is to take a scatter plot of human freedom index versus explanatory variable that are potentially valid to create a multiple regression model. Finally, we rename them to see clearer names. After we do those processes, we modify the dataset to make same_sex a categorical variable (yes and no) from the original same_sex quantitative variable. Finally, since there are substantial amount of missing values, we fill them by imputing the average value of each column to missing values. A lot of values in Africa are missing since they failed to collect the data in these regions. 
-\newpage
+
 
 ######b. Variable Meanings
 
@@ -58,15 +52,12 @@ All of variables are measured on a 0-10 scale except for same_sex and country va
 In order to evaluate the data, we use the statistical software R to create a multiple regression model. Our main goal of creating a multiple regression model is heavily on effective and logical model that enables us to attain easy interpretability of explanatory variables. First, we divide explanatory variables into two groups: one group is a set of variables directly correlated to human freedom index. In order to do it, we get two types of correlation coefficients of human freedom index versus each explanatory variable, and economic freedom index versus each explanatory variable to categorize whether an individual is associated with human freedom or economic freedom. We pick variables that have stronger correlation to human freedom index than that of economic freedom index. By doing this process, we attain the explanatory variables: association, same_sex, legal, rol, ss, movement, expression. The other group is a set of the variables related to economic aspect as interaction terms: government, money, and trade in the same process we do for the first group. However, we pick variables that have stronger correlation to economic freedom index than that of human freedom index we get Those are also the variables we are interested as they might create insightful interpretations. With those variables, we create a multiple regression model(Model1). It is done by creating a full model in addition to all possible interaction term with three variables related to economic aspects. Then we get individual p value from the summary table in order to determine which factors are crucial to describe the expected value of human freedom index. Note that though a couple of variables related to economic aspects are not enough to describe the model, we leave these variables for two reasons. Firstly, it is because we would like to get the interpretation of interaction terms. Secondly, it is because we make a guess that their statistical significance might improve after we get rid of other variables. 
 
 In the end, we get three types of models. The first one is the full model we describe above(Model1). The second one is a model we believe it is the best model(Model2). The third one is a simple linear regression model with trade variable(Model3) since the correlation is the highest among the variables associated to economic aspects. Based on these three models we get F statistic and $R^2$. P value for all the models are extremely small because of the big sample size and we could not compare the value each other. Therefore, we get F statistic instead. Note that, in this hypothesis testing, F statistic indicates the statistical difference between two models in ANOVA test.
-\
-\
 
 
 #### 3) Results
 
 From the Table1, Model1 that we throw all the explanatory variables gets F statistic of $1491.879$ and an $R^2$ of $0.9678510$. Model2 that we believe the best model gets F statistic of $3011.204$ and an $R^2$ of $0.9466727$. Model3 that we only use trade variable as an explanatory variable gets F statistic of $2486.016$ and an $R^2$ of $0.6306459$. Based on F statistic, Model2 attains the highest F statistic, which also means that it attains the least p value. For $R^2$, Model1 attains the highest $R^2$ score. However, in theory, $R^2$ would not decrease when we add additional explanatory variables. There is also little drop from Model1 to Model2 $(0.9678510-0.9466727)$, whereas there is substantial drop from Model2 to Model3 $(0.9466727-0.6306459)$. Therefore, we do not have enough evidence to conclude that Model1 has the best model only based on $R^2$. Each $R^2$ tells you the proportion of variation in human freedom index that is explained by the model with given explanatory variables, and the higher $R^2$ is, the better, though attaining too high $R^2$ might indicate overfitting(Model1). Therefore, we conclude that Model2 is the best model among three models. Here is the model2.
-\
-\
+
 
 
 ######Model2:
@@ -78,7 +69,7 @@ $$+\beta_5*(expression)+\beta_6*(trade)+\beta_7*(government)-\beta_8*(ss*trade)$
 $$\widehat{human.freedom.index} = -0.99+0.07*(association)+0.31*(samesex)+ 0.24*(rol)+ 0.32*(ss)+0.12*(expression)$$
 $$+0.43*(trade)+0.12*(government)-0.02*(ss*trade)$$
 
-```{r, message=FALSE,warning=FALSE,echo=FALSE}
+
 mfull <- lm(data=fi2018, human_freedom ~ association+same_sex+legal+rol+ss+expression+government+money+trade+ government:association+government:same_sex+government:legal+government:rol+government:ss+government:expression+money:association+money:same_sex+money:legal+money:rol+money:ss+money:expression+trade:association+trade:same_sex+trade:legal+trade:rol+trade:ss+trade:expression) 
 m1 <- lm(data=fi2018, human_freedom ~ association+same_sex+rol+ss+expression+trade+government+trade:ss)
 m2 <- lm(data=fi2018, human_freedom ~ trade)
@@ -99,7 +90,7 @@ rownames(result) <- c('Model1', 'Model2', 'Model3')
 colnames(result) <- c('F', 'R^2')
 library(knitr)
 kable(result,  caption="The Result of F statistic and R^2")
-```
+
 
 (Intercept): Expected human freedom index in the world of all the time when all of the other variables' scale is 0 with the response no to men's same-sex relationship is $-0.99$. 
 
@@ -148,20 +139,20 @@ Happiness and Economics. (2010) *How the Economy and Institutions Affect Human W
 
 Ingstad, B., & Whyte, S. R. (2007). *Disability in local and global worlds.* Berkeley: University of California Press.
 
-\newpage
+
 
 #### 6) Appendix 
 
-```{r, echo=FALSE}
+
 kable(summary(m1)$coefficient,  caption="Model2 Summary Table")
-```
 
 
-```{r,fig.height=3,fig.width=7, message=FALSE,warning=FALSE, echo=FALSE}
+
+
 plot(m1, which=1)
 plot(m1, which=2)
-```
-\newpage
+
+
 
 #####Human Freedom Index Versus Trade for Countries With Different Scale of ss(terrorism)
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2, fig.width=5}
@@ -173,9 +164,9 @@ gf_point(data=fi2018, human_freedom~trade, color = ~ss)
 
 
 #####Human Freedom Index Versus Association
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2, fig.width=5}
+
 gf_point(data=fi2018, human_freedom~association, cex=0.2) 
-```
+
 
 
 #### 7) Data 
